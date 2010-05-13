@@ -1,0 +1,73 @@
+# DEFAULT SETTINGS
+##############################################
+Options +ExecCGI -Indexes
+DirectoryIndex index.php index.html index.htm
+
+### DEFAULTS ###
+ServerSignature Off
+AddType video/x-flv .flv
+AddType application/x-shockwave-flash .swf
+AddType image/x-icon .ico
+AddDefaultCharset UTF-8
+DefaultLanguage en-US
+SetEnv TZ America/Indianapolis
+SetEnv SERVER_ADMIN webmaster@askapache.com
+
+### FAST-CGI ###
+AddHandler fastcgi-script fcgi
+AddHandler php-cgi .php
+Action php-cgi /cgi-bin/php5-wrapper.fcgi
+
+
+
+# HEADERS and CACHING
+##############################################
+#### CACHING ####
+# YEAR
+<FilesMatch "\.(flv|gif|jpg|jpeg|png|ico)$">
+   Header set Cache-Control "max-age=2592000"
+</FilesMatch>
+# WEEK
+<FilesMatch "\.(js|css|pdf|swf)$">
+   Header set Cache-Control "max-age=604800"
+</FilesMatch>
+# 10 minutes
+<FilesMatch "\.(html|htm|txt)$">
+   Header set Cache-Control "max-age=600"
+</FilesMatch>
+# DONT CACHE
+<FilesMatch "\.(pl|php|cgi|spl|scgi|fcgi)$">
+   Header unset Cache-Control
+</FilesMatch>
+
+
+
+# REWRITES AND REDIRECTS
+##############################################
+### SEO REDIRECTS ###
+Redirect 301 /2006/uncategorized/htaccesselitecom-aboutus.html http://www.^^SITE^^.^^TLD^^
+
+### REWRITES ###
+RewriteEngine On
+RewriteBase /
+
+### WORDPRESS ###
+# BEGIN WordPress
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.php [L]
+</IfModule>
+
+# END WordPress
+
+
+
+# AUTHENTICATION 
+##############################################
+AuthName "askapache.com"
+Require valid-user
+AuthUserFile /askapache/.htpasswd
+AuthType basic
