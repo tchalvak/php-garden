@@ -1,0 +1,7 @@
+*~
+dev/*
+gitLog
+youcanSymlinkToThisFilewithADotgitignoresymlink
+test.php
+dirty_raws
+dirty_backup/
